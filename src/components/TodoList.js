@@ -1,47 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Stack, Container, Typography } from "@mui/material";
 import CategoriesList from "./CategoriesList";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { v4 as uuidv4 } from "uuid";
 import Todo from "./Todo";
+import { v4 as uuidv4 } from "uuid";
+import { TodosContext } from "../contexts/TodosContext";
 
 export default function TodoList() {
-  let todosJsx = [
-    {
-      id: uuidv4(),
-      title: "Edit Colors",
-      details: "Add gradient to Todo.js background color",
-      isCompleted: false,
-    },
-    {
-      id: uuidv4(),
-      title: "Pray",
-      details: "Pray the whole five prayers today.",
-      isCompleted: false,
-    },
-  ];
-  const [todos, setTodos] = useState(todosJsx);
+  const { todos, setTodos } = useContext(TodosContext);
   const [newTask, setNewTask] = useState("");
 
   const todosList = todos.map((t) => {
-    return (
-      <Todo
-        key={t.id}
-        todo={t}
-        handler={(todoId) => {
-          setTodos(
-            todos.map((t) => {
-              return t.id === todoId
-                ? t.isCompleted
-                  ? { ...t, isCompleted: false }
-                  : { ...t, isCompleted: true }
-                : { ...t };
-            })
-          );
-        }}
-      />
-    );
+    return <Todo key={t.id} todo={t} />;
   });
   return (
     <Container maxWidth="sm">

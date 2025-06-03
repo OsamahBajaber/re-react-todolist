@@ -7,8 +7,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
+import { useContext } from "react";
+import { TodosContext } from "../contexts/TodosContext";
 
-function Todo({ todo, handler }) {
+function Todo({ todo }) {
+  // console.log(todo);
+  const { todos, setTodos } = useContext(TodosContext);
   return (
     <Card
       className="todo-card"
@@ -41,7 +45,15 @@ function Todo({ todo, handler }) {
               backgroundColor: todo.isCompleted ? "#4caf50" : "#ece7e2",
             }}
             onClick={() => {
-              handler(todo.id);
+              setTodos(
+                todos.map((t) => {
+                  return t.id === todo.id
+                    ? t.isCompleted
+                      ? { ...t, isCompleted: false }
+                      : { ...t, isCompleted: true }
+                    : { ...t };
+                })
+              );
             }}
           >
             <CheckIcon />
