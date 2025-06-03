@@ -12,22 +12,23 @@ const theme = createTheme({
 });
 
 let todosJsx = [
-  {
-    id: uuidv4(),
-    title: "Edit Colors",
-    details: "Add gradient to Todo.js background color",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "Pray",
-    details: "Pray the whole five prayers today.",
-    isCompleted: false,
-  },
+  // {
+  //   id: uuidv4(),
+  //   title: "Edit Colors",
+  //   details: "Add gradient to Todo.js background color",
+  //   isCompleted: false,
+  // },
+  // {
+  //   id: uuidv4(),
+  //   title: "Pray",
+  //   details: "Pray the whole five prayers today.",
+  //   isCompleted: false,
+  // },
 ];
 
 function App() {
   const [todos, setTodos] = useState(todosJsx);
+
   return (
     <ThemeProvider theme={theme}>
       <div

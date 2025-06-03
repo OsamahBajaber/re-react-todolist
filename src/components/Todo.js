@@ -14,14 +14,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Stack } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { TodosContext } from "../contexts/TodosContext";
 
 function Todo({ todo }) {
   // console.log(todo);
   const { todos, setTodos } = useContext(TodosContext);
-  // Delete Dialog Logic
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
+  // Delete Dialog Logic
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const handleOpenDialog = () => {
     setOpenDeleteDialog(true);
@@ -173,6 +176,8 @@ function Todo({ todo }) {
                   if (t.id !== todo.id) {
                     handleCloseDeleteDialog();
                     return t;
+                  } else {
+                    localStorage.removeItem("todos");
                   }
                 })
               );

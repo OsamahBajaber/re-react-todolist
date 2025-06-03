@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Stack, Container, Typography } from "@mui/material";
 import CategoriesList from "./CategoriesList";
 import TextField from "@mui/material/TextField";
@@ -10,6 +10,12 @@ import { TodosContext } from "../contexts/TodosContext";
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
   const [newTask, setNewTask] = useState("");
+
+  useEffect(() => {
+    const stordeTodos = JSON.parse(localStorage.getItem("todos"));
+    setTodos(stordeTodos);
+    console.log("useEffect");
+  }, []);
 
   const todosList = todos.map((t) => {
     return <Todo key={t.id} todo={t} />;
@@ -62,7 +68,11 @@ export default function TodoList() {
                 details: "",
                 isCompleted: false,
               };
-              setTodos([...todos, newTodo]);
+              setTodos((t) => {
+                const queuedTodos = [...t, newTodo];
+                localStorage.setItem("todos", JSON.stringify(queuedTodos));
+                return queuedTodos;
+              });
               setNewTask("");
             }}
           >
