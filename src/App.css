@@ -1,6 +1,16 @@
 .App {
   text-align: center;
 }
+@font-face {
+  font-family: ancizar;
+  src: url("/public/fonts/AncizarSans-Bold.ttf");
+  font-weight: bold;
+}
+@font-face {
+  font-family: ancizar;
+  src: url("/public/fonts/AncizarSans-Medium.ttf");
+font-weight: normal;
+}
 
 .App-logo {
   height: 40vmin;
@@ -36,3 +46,14 @@
     transform: rotate(360deg);
   }
 }
+
+.icon-card:hover{
+  background-color: #c5c5c5 !important;
+  box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.4);
+}
+
+.todo-card:hover{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
