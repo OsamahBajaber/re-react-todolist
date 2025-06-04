@@ -6,21 +6,15 @@ import CheckIcon from "@mui/icons-material/Check";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { Stack } from "@mui/material";
 import { useContext, useState, useEffect } from "react";
 import { TodosContext } from "../contexts/TodosContext";
+import { DeleteDialogContext } from "../contexts/DeleteDialogContext";
+import DeleteDialog from "./DeleteDialog";
 import { EditDialogContext } from "../contexts/EditDialogContext";
 import EditDialog from "./EditDialog";
 
 function Todo({ todo }) {
-  // console.log(todo);
   const { todos, setTodos } = useContext(TodosContext);
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -60,71 +54,24 @@ function Todo({ todo }) {
         value={{
           editInput,
           setEditInput,
-          openEditDialog,
-          setOpenEditDialog,
-          handleOpenEditDialog,
           handleCloseEditDialog,
+          openEditDialog,
           todo,
         }}
       >
         <EditDialog />
       </EditDialogContext.Provider>
+      {/* ===== Edit Dialog ===== */}
       {/* Delete Dialog */}
-      <Dialog
-        open={openDeleteDialog}
-        onClose={handleCloseDeleteDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+      <DeleteDialogContext.Provider
+        value={{
+          openDeleteDialog,
+          handleCloseDeleteDialog,
+          todo,
+        }}
       >
-        {/* Dialog Title */}
-        <DialogTitle id="alert-dialog-title">
-          <Typography variant="h4" sx={{ textTransform: "uppercase" }}>
-            delete confirmation alert
-          </Typography>
-        </DialogTitle>
-        {/* ===== Dialog Title ===== */}
-        {/* Dialog Body */}
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <Typography variant="h6">
-              Are you sure you want to delete this task?
-            </Typography>
-          </DialogContentText>
-        </DialogContent>
-        {/* ===== Dialog Body ===== */}
-        {/* Dialog Action Button */}
-        <DialogActions>
-          {/* Cancel Button */}
-          <Button
-            onClick={handleCloseDeleteDialog}
-            autoFocus
-            sx={{ color: "#009688" }}
-          >
-            Cancel
-          </Button>
-          {/* ===== Cancel Button ===== */}
-          {/* Confirm Button */}
-          <Button
-            sx={{ color: "#ba000d", fontWeight: "bold" }}
-            onClick={() => {
-              setTodos(
-                todos.filter((t) => {
-                  if (t.id !== todo.id) {
-                    handleCloseDeleteDialog();
-                    return t;
-                  } else {
-                    localStorage.removeItem("todos");
-                  }
-                })
-              );
-            }}
-          >
-            Delete
-          </Button>
-          {/* ===== Confirm Button ===== */}
-        </DialogActions>
-        {/* ===== Dialog Action Button ===== */}
-      </Dialog>
+        <DeleteDialog />
+      </DeleteDialogContext.Provider>
       {/* ===== Delete Dialog ===== */}
 
       {/* Todo Card */}
