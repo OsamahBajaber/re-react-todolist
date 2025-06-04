@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { Stack, Container, Typography } from "@mui/material";
+import { Stack, Container, Typography, Card } from "@mui/material";
 import CategoriesList from "./CategoriesList";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -33,70 +33,78 @@ export default function TodoList() {
   });
   return (
     <Container maxWidth="sm">
-      <Stack
-        spacing={2}
-        justifyContent="center"
-        alignItems="center"
-        sx={{
-          bgcolor: "white",
-          borderRadius: "6px",
-          paddingTop: "2rem",
-          paddingBottom: "2rem",
-        }}
-      >
-        <Typography variant="h2" sx={{ fontWeight: "bold" }}>
-          Tasks
-        </Typography>
-        <hr
-          style={{ width: "90%", marginTop: "-15px", marginBottom: "10px" }}
-        />
-        <TodosTypeContext.Provider value={[todosType, setTodosType]}>
-          <CategoriesList />
-        </TodosTypeContext.Provider>
-        {todosList}
-
-        <Stack direction="row" sx={{ width: "90%" }} spacing={2}>
-          <TextField
-            sx={{ width: "70%" }}
-            label="Add Task"
-            variant="outlined"
-            color="#e28741"
-            value={newTask}
-            onChange={(e) => {
-              setNewTask(e.target.value);
-            }}
+      <Card sx={{ maxHeight: "80vh", overflow: "scroll" }}>
+        <Stack
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            bgcolor: "white",
+            borderRadius: "6px",
+            paddingTop: "2rem",
+            paddingBottom: "2rem",
+          }}
+        >
+          <Typography variant="h2" sx={{ fontWeight: "bold" }}>
+            Tasks
+          </Typography>
+          <hr
+            style={{ width: "90%", marginTop: "-15px", marginBottom: "10px" }}
           />
-          {/* Confirm Button */}
-          <Button
-            disabled={todosType === "done" || todosType === "not done"}
-            variant="contained"
-            sx={{
-              width: "30%",
-              backgroundImage:
-                todosType === "done" || todosType === "not done"
-                  ? "#ece7e2"
-                  : "linear-gradient(to right, #b4662a,#e28741)",
-            }}
-            onClick={() => {
-              const newTodo = {
-                id: uuidv4(),
-                title: newTask,
-                details: "",
-                isCompleted: false,
-              };
-              setTodos((t) => {
-                const queuedTodos = [...t, newTodo];
-                localStorage.setItem("todos", JSON.stringify(queuedTodos));
-                return queuedTodos;
-              });
-              setNewTask("");
-            }}
-          >
-            Confirm
-          </Button>
-          {/* ===== Confirm Button ===== */}
+          <TodosTypeContext.Provider value={[todosType, setTodosType]}>
+            <CategoriesList />
+          </TodosTypeContext.Provider>
+          {todosList}
+
+          <Stack direction="row" sx={{ width: "90%" }} spacing={2}>
+            <TextField
+              sx={{ width: "70%" }}
+              label="Add Task"
+              variant="outlined"
+              color="#e28741"
+              value={newTask}
+              onChange={(e) => {
+                setNewTask(e.target.value);
+              }}
+            />
+            {/* Confirm Button */}
+            <Button
+              disabled={
+                todosType === "done" ||
+                todosType === "not done" ||
+                newTask.length <= 0
+              }
+              variant="contained"
+              sx={{
+                width: "30%",
+                backgroundImage:
+                  todosType === "done" ||
+                  todosType === "not done" ||
+                  newTask.length <= 0
+                    ? "#ece7e2"
+                    : "linear-gradient(to right, #b4662a,#e28741)",
+              }}
+              onClick={() => {
+                const newTodo = {
+                  id: uuidv4(),
+                  title: newTask,
+                  details: "",
+                  isCompleted: false,
+                };
+                setTodos((t) => {
+                  const queuedTodos = [...t, newTodo];
+                  localStorage.setItem("todos", JSON.stringify(queuedTodos));
+                  return queuedTodos;
+                });
+                setNewTask("");
+              }}
+            >
+              Confirm
+            </Button>
+            {/* ===== Confirm Button ===== */}
+          </Stack>
         </Stack>
-      </Stack>
+      </Card>
     </Container>
   );
 }
