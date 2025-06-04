@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useMemo } from "react";
 import { Stack, Container, Typography, Card } from "@mui/material";
 import CategoriesList from "./CategoriesList";
 import TextField from "@mui/material/TextField";
@@ -18,9 +18,19 @@ export default function TodoList() {
     setTodos(stordeTodos);
   }, []);
 
-  const completedTodos = todos.filter((t) => t.isCompleted);
+  const completedTodos = useMemo(() => {
+    return todos.filter((t) => {
+      console.log("Completed todos");
+      return t.isCompleted;
+    });
+  }, [todos]);
 
-  const unCompletedTodos = todos.filter((t) => !t.isCompleted);
+  const unCompletedTodos = useMemo(() => {
+    return todos.filter((t) => {
+      console.log("not completed todos");
+      return !t.isCompleted;
+    });
+  });
 
   let renderedTodos =
     todosType === "done"
