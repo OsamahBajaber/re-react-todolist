@@ -6,18 +6,29 @@ import Button from "@mui/material/Button";
 import Todo from "./Todo";
 import { v4 as uuidv4 } from "uuid";
 import { TodosContext } from "../contexts/TodosContext";
+import { TodosTypeContext } from "../contexts/TodosTypeContext";
 
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
   const [newTask, setNewTask] = useState("");
+  const [todosType, setTodosType] = useState("all");
 
   useEffect(() => {
     const stordeTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(stordeTodos);
-    console.log("useEffect");
   }, []);
 
-  const todosList = todos.map((t) => {
+  const completedTodos = todos.filter((t) => t.isCompleted);
+
+  const unCompletedTodos = todos.filter((t) => !t.isCompleted);
+
+  let renderedTodos =
+    todosType === "done"
+      ? completedTodos
+      : todosType === "not done"
+      ? unCompletedTodos
+      : todos;
+  const todosList = renderedTodos.map((t) => {
     return <Todo key={t.id} todo={t} />;
   });
   return (
@@ -39,8 +50,9 @@ export default function TodoList() {
         <hr
           style={{ width: "90%", marginTop: "-15px", marginBottom: "10px" }}
         />
-        <CategoriesList />
-
+        <TodosTypeContext.Provider value={[todosType, setTodosType]}>
+          <CategoriesList />
+        </TodosTypeContext.Provider>
         {todosList}
 
         <Stack direction="row" sx={{ width: "90%" }} spacing={2}>
@@ -56,10 +68,14 @@ export default function TodoList() {
           />
           {/* Confirm Button */}
           <Button
+            disabled={todosType === "done" || todosType === "not done"}
             variant="contained"
             sx={{
               width: "30%",
-              backgroundImage: "linear-gradient(to right, #b4662a,#e28741)",
+              backgroundImage:
+                todosType === "done" || todosType === "not done"
+                  ? "#ece7e2"
+                  : "linear-gradient(to right, #b4662a,#e28741)",
             }}
             onClick={() => {
               const newTodo = {

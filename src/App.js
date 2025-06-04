@@ -2,8 +2,9 @@ import "./App.css";
 import TodoList from "./components/TodoList";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import { TodosContext } from "./contexts/TodosContext";
+// import { TodosTypeContext } from "./contexts/TodosTypeContext";
 
 const theme = createTheme({
   typography: {
