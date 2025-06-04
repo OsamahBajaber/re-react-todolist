@@ -16,6 +16,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Stack } from "@mui/material";
 import { useContext, useState, useEffect } from "react";
 import { TodosContext } from "../contexts/TodosContext";
+import { EditDialogContext } from "../contexts/EditDialogContext";
+import EditDialog from "./EditDialog";
 
 function Todo({ todo }) {
   // console.log(todo);
@@ -54,85 +56,19 @@ function Todo({ todo }) {
   return (
     <>
       {/* Edit Dialog */}
-      <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
-        <DialogTitle>
-          <Typography variant="h4" sx={{ textTransform: "uppercase" }}>
-            Edit Task ({todo.title})
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <Typography variant="h6">
-              To edit this task, please enter new title and new details.
-            </Typography>
-          </DialogContentText>
-          {/* Title Input */}
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="title"
-            label="Edit Title"
-            value={editInput.title}
-            fullWidth
-            variant="standard"
-            onChange={(e) => {
-              setEditInput({ ...editInput, title: e.target.value });
-            }}
-          />
-          {/* ===== Title Input ===== */}
-          {/* Details Input */}
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="details"
-            label="Edit Details"
-            value={editInput.details}
-            fullWidth
-            variant="standard"
-            onChange={(e) => {
-              setEditInput({ ...editInput, details: e.target.value });
-            }}
-          />
-          {/* ===== Details Input ===== */}
-        </DialogContent>
-        {/* Dialog Action Buttons */}
-        <DialogActions>
-          {/* Cancel Button */}
-          <Button sx={{ color: "#ba000d" }} onClick={handleCloseEditDialog}>
-            Cancel
-          </Button>
-          {/* ===== Cancel Button ===== */}
-          {/* Confirm Button */}
-          <Button
-            sx={{ fontWeight: "bold", color: "#0277bd" }}
-            onClick={() => {
-              setTodos(
-                todos.map((t) => {
-                  if (t.id === todo.id) {
-                    handleCloseEditDialog();
-                    return {
-                      ...t,
-                      title: editInput.title,
-                      details: editInput.details,
-                    };
-                  } else {
-                    return t;
-                  }
-                })
-              );
-            }}
-          >
-            Confirm
-          </Button>
-          {/* ===== Confirm Button ===== */}
-        </DialogActions>
-        {/* ===== Dialog Action Buttons ===== */}
-      </Dialog>
-      {/* ===== Edit Dialog ===== */}
+      <EditDialogContext.Provider
+        value={{
+          editInput,
+          setEditInput,
+          openEditDialog,
+          setOpenEditDialog,
+          handleOpenEditDialog,
+          handleCloseEditDialog,
+          todo,
+        }}
+      >
+        <EditDialog />
+      </EditDialogContext.Provider>
       {/* Delete Dialog */}
       <Dialog
         open={openDeleteDialog}
