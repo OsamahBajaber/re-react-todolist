@@ -8,12 +8,16 @@ import Button from "@mui/material/Button";
 import { useContext } from "react";
 import { DeleteDialogContext } from "../contexts/DeleteDialogContext";
 import { TodosContext } from "../contexts/TodosContext";
+import { ToastContext } from "../contexts/ToastContext";
 
 function DeleteDialog() {
+  // Todos Context
   const { todos, setTodos } = useContext(TodosContext);
-
+  // Delete Dialog Context
   const { openDeleteDialog, handleCloseDeleteDialog, todo } =
     useContext(DeleteDialogContext);
+  // Toast Dialog
+  const { handleOpenToast } = useContext(ToastContext);
   return (
     <>
       {/* Delete Dialog */}
@@ -64,6 +68,7 @@ function DeleteDialog() {
                   }
                 })
               );
+              handleOpenToast();
             }}
           >
             Delete

@@ -13,12 +13,17 @@ import { DeleteDialogContext } from "../contexts/DeleteDialogContext";
 import DeleteDialog from "./DeleteDialog";
 import { EditDialogContext } from "../contexts/EditDialogContext";
 import EditDialog from "./EditDialog";
+import { ToastContext } from "../contexts/ToastContext";
 
 function Todo({ todo }) {
   const { todos, setTodos } = useContext(TodosContext);
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
+
+  // Toast Context
+  const { handleOpenToast } = useContext(ToastContext);
+  // ===== Toast Context =====
 
   // Delete Dialog Logic
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -116,6 +121,7 @@ function Todo({ todo }) {
                       : t;
                   })
                 );
+                handleOpenToast();
               }}
             >
               <CheckIcon />

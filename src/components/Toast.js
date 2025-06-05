@@ -1,12 +1,12 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { ToastContext } from "../contexts/ToastContext";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function SimpleSnackbar() {
-  const { openToast, setOpenToast, handleOpenToast, handleCloseToast } =
+export default function Toast() {
+  const { openToast, handleOpenToast, handleCloseToast } =
     useContext(ToastContext);
 
   const action = (

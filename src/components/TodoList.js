@@ -7,6 +7,7 @@ import Todo from "./Todo";
 import { v4 as uuidv4 } from "uuid";
 import { TodosContext } from "../contexts/TodosContext";
 import { TodosTypeContext } from "../contexts/TodosTypeContext";
+import { ToastContext } from "../contexts/ToastContext";
 
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
@@ -17,6 +18,8 @@ export default function TodoList() {
     const stordeTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(stordeTodos);
   }, []);
+
+  const { handleOpenToast } = useContext(ToastContext);
 
   const completedTodos = useMemo(() => {
     return todos.filter((t) => {
@@ -107,6 +110,7 @@ export default function TodoList() {
                   return queuedTodos;
                 });
                 setNewTask("");
+                handleOpenToast();
               }}
             >
               Confirm

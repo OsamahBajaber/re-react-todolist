@@ -31,14 +31,16 @@ let todosJsx = [
 
 function App() {
   const [todos, setTodos] = useState(todosJsx);
+
+  // Toast Logic
   const [openToast, setOpenToast] = useState(false);
   const handleOpenToast = () => {
     setOpenToast(true);
   };
-
   const handleCloseToast = () => {
     setOpenToast(false);
   };
+  // ===== Toast Logic =====
 
   return (
     <ThemeProvider theme={theme}>
@@ -55,7 +57,6 @@ function App() {
           <ToastContext.Provider
             value={{
               openToast,
-              setOpenToast,
               handleOpenToast,
               handleCloseToast,
             }}

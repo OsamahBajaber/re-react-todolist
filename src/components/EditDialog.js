@@ -9,9 +9,12 @@ import Button from "@mui/material/Button";
 import { useContext } from "react";
 import { EditDialogContext } from "../contexts/EditDialogContext";
 import { TodosContext } from "../contexts/TodosContext";
+import { ToastContext } from "../contexts/ToastContext";
 
 function EditDialog() {
+  // Todos Context
   const { todos, setTodos } = useContext(TodosContext);
+  // Edit Dialog Context
   const {
     editInput,
     setEditInput,
@@ -19,6 +22,8 @@ function EditDialog() {
     openEditDialog,
     todo,
   } = useContext(EditDialogContext);
+  // Toast Context
+  const { handleOpenToast } = useContext(ToastContext);
 
   return (
     <>
@@ -93,6 +98,7 @@ function EditDialog() {
                   }
                 })
               );
+              handleOpenToast();
             }}
           >
             Confirm
