@@ -6,7 +6,7 @@ import { useState } from "react";
 import { TodosContext } from "./contexts/TodosContext";
 // import { TodosTypeContext } from "./contexts/TodosTypeContext";
 import Toast from "./components/Toast";
-import { ToastContext } from "./contexts/ToastContext";
+import { ToastProvider } from "./contexts/ToastContext";
 
 const theme = createTheme({
   typography: {
@@ -32,16 +32,6 @@ let todosJsx = [
 function App() {
   const [todos, setTodos] = useState(todosJsx);
 
-  // Toast Logic
-  const [openToast, setOpenToast] = useState(false);
-  const handleOpenToast = () => {
-    setOpenToast(true);
-  };
-  const handleCloseToast = () => {
-    setOpenToast(false);
-  };
-  // ===== Toast Logic =====
-
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -54,16 +44,10 @@ function App() {
         }}
       >
         <TodosContext.Provider value={{ todos, setTodos }}>
-          <ToastContext.Provider
-            value={{
-              openToast,
-              handleOpenToast,
-              handleCloseToast,
-            }}
-          >
+          <ToastProvider>
             <Toast />
             <TodoList />
-          </ToastContext.Provider>
+          </ToastProvider>
         </TodosContext.Provider>
       </div>
     </ThemeProvider>

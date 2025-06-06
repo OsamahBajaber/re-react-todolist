@@ -1,13 +1,11 @@
-import { useContext } from "react";
-import { ToastContext } from "../contexts/ToastContext";
+import { useToast } from "../contexts/ToastContext";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function Toast() {
-  const { openToast, handleOpenToast, handleCloseToast } =
-    useContext(ToastContext);
+  const { openToast, handleCloseToast } = useToast();
 
   const action = (
     <>
@@ -24,12 +22,11 @@ export default function Toast() {
 
   return (
     <div>
-      <Button onClick={handleOpenToast}>Open Snackbar</Button>
       <Snackbar
         open={openToast}
         autoHideDuration={3000}
         onClose={handleCloseToast}
-        message="Note archived"
+        message="Changes Saved!"
         action={action}
       />
     </div>

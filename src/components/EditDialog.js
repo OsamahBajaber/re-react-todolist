@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import { useContext } from "react";
 import { EditDialogContext } from "../contexts/EditDialogContext";
 import { TodosContext } from "../contexts/TodosContext";
-import { ToastContext } from "../contexts/ToastContext";
+import { useToast } from "../contexts/ToastContext";
 
 function EditDialog() {
   // Todos Context
@@ -23,7 +23,7 @@ function EditDialog() {
     todo,
   } = useContext(EditDialogContext);
   // Toast Context
-  const { handleOpenToast } = useContext(ToastContext);
+  const { handleOpenToast } = useToast();
 
   return (
     <>
